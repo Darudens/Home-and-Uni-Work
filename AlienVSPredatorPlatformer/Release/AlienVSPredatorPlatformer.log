@@ -1,0 +1,10 @@
+﻿  Source.cpp
+c:\users\daros\source\repos\alienvspredatorplatformer\alienvspredatorplatformer\source.cpp(27): warning C4244: 'argument': conversion from 'float' to 'int32_t', possible loss of data
+c:\users\daros\source\repos\alienvspredatorplatformer\alienvspredatorplatformer\source.cpp(26): warning C4244: 'argument': conversion from 'float' to 'int32_t', possible loss of data
+c:\users\daros\source\repos\alienvspredatorplatformer\alienvspredatorplatformer\source.cpp(52): warning C4244: 'argument': conversion from 'float' to 'int32_t', possible loss of data
+  Generating code
+  2 of 634 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  AlienVSPredatorPlatformer.vcxproj -> C:\Users\daros\source\repos\AlienVSPredatorPlatformer\Release\AlienVSPredatorPlatformer.exe

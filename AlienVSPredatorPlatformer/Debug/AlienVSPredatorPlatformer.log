@@ -1,0 +1,4 @@
+﻿  Source.cpp
+c:\users\daros\source\repos\alienvspredatorplatformer\alienvspredatorplatformer\source.cpp(26): warning C4244: 'argument': conversion from 'float' to 'int32_t', possible loss of data
+c:\users\daros\source\repos\alienvspredatorplatformer\alienvspredatorplatformer\source.cpp(25): warning C4244: 'argument': conversion from 'float' to 'int32_t', possible loss of data
+  AlienVSPredatorPlatformer.vcxproj -> C:\Users\daros\source\repos\AlienVSPredatorPlatformer\Debug\AlienVSPredatorPlatformer.exe
