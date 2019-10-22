@@ -1,2 +1,11 @@
-﻿  Source.cpp
-  Assignment1Stratey.vcxproj -> F:\HomeAndUniWork\Home-and-Uni-Work\Assignment1Stratey\Debug\Assignment1Stratey.exe
+﻿  Harpy.cpp
+  Hero.cpp
+  Minotaur.cpp
+  Source.cpp
+  Spell.cpp
+  SpellBook.cpp
+  troglodyte.cpp
+  Units.cpp
+  Generating Code...
+  LINK : D:\Home-and-Uni-Work\Assignment1Stratey\Debug\Assignment1Stratey.exe not found or not built by the last incremental link; performing full link
+  Assignment1Stratey.vcxproj -> D:\Home-and-Uni-Work\Assignment1Stratey\Debug\Assignment1Stratey.exe

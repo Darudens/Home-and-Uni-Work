@@ -27,14 +27,14 @@ public:
 		BySpeed.push_back(&TROGLODYTE);
 		BySpeed.push_back(&MINOTAUR);
 		BySpeed.push_back(&HARPY);
-		std::sort(BySpeed.begin(), BySpeed.end(), &COSA::CompareSpeed);
+		std::sort(BySpeed.begin(), BySpeed.end(), &COSA::CompareSpeed); //Custom sort to which puts units in speed order to determin which creature goes first
 	}
 	olc::Sprite* Background;  //creating a pointer to background file.
 	olc::Pixel GridColour = olc::GREEN; //pointer to grid colour.
-	std::vector<Units*> BySpeed;
+	std::vector<Units*> BySpeed; //Vector of class Units
 public:
 	//game loop
-	bool OnUserCreate() override
+	bool OnUserCreate() override //Function called once during the runtime creates static components
 	{
 		DrawBackground();
 		DrawGrid();
@@ -42,14 +42,14 @@ public:
 		return true;
 	}
 
-	bool OnUserUpdate(float fElapsedTime) override
+	bool OnUserUpdate(float fElapsedTime) override //Function called every tick
 	{
 		
 		DrawPartialSprite(TROGLODYTE.GetPositionX(), TROGLODYTE.GetPositionY(), TROGLODYTE.GetSprite(), 21, 13, 60, 91, 1);
 		DrawPartialSprite(MINOTAUR.GetPositionX(), MINOTAUR.GetPositionY(), MINOTAUR.GetSprite(), 21, 13, 60, 91, 1);
 		DrawPartialSprite(HARPY.GetPositionX(), HARPY.GetPositionY(), HARPY.GetSprite(), 21, 13, 60, 91, 1);
 		DrawReach(TROGLODYTE.GetPositionX(), TROGLODYTE.GetPositionY(), TROGLODYTE.GetSpeed());
-		DrawPos();
+		//DrawPos();
 		return true;
 	}
 public:
@@ -68,18 +68,19 @@ public:
 			}
 	}
 
-	void DrawReach(int UnitPosX, int UnitPosY, int UnitSPD)
+	void DrawReach(int UnitPosX, int UnitPosY, int UnitSPD) //Draws area of available moves depending on creatures speed
 	{
 		DrawRect(UnitPosX - 38, UnitPosY + 5, 42 * UnitSPD, 42 * UnitSPD, olc::YELLOW);
 	}
 
-	void DrawPos()
-	{
-		if (GetKey(olc::Key::A).bPressed)
-			DrawString(400, 256, "Mouse: " + std::to_string(GetMouseX()) + ", " + std::to_string(GetMouseY()), olc::BLACK, 3);
-	}
+	/////////TODO: Create a function that will allow to move creatures around the board depending on their speed.//////////////
+	//void DrawPos() 
+	//{
+	//	if (GetKey(olc::Key::A).bPressed)
+	//		DrawString(400, 256, "Mouse: " + std::to_string(GetMouseX()) + ", " + std::to_string(GetMouseY()), olc::BLACK, 3);
+	//} 
 
-	static bool CompareSpeed(Units* Unit1, Units* Unit2)
+	static bool CompareSpeed(Units* Unit1, Units* Unit2) //Function working as a parameter for "sort" function which compares the speed of all units
 	{
 		return(Unit1->GetSpeed() > Unit2->GetSpeed());
 	}
