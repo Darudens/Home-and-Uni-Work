@@ -48,12 +48,7 @@ public:
 		DrawPartialSprite(TROGLODYTE.GetPositionX(), TROGLODYTE.GetPositionY(), TROGLODYTE.GetSprite(), 21, 13, 60, 91, 1);
 		DrawPartialSprite(MINOTAUR.GetPositionX(), MINOTAUR.GetPositionY(), MINOTAUR.GetSprite(), 21, 13, 60, 91, 1);
 		DrawPartialSprite(HARPY.GetPositionX(), HARPY.GetPositionY(), HARPY.GetSprite(), 21, 13, 60, 91, 1);
-<<<<<<< Updated upstream
-		DrawReach(TROGLODYTE.GetPositionX(), TROGLODYTE.GetPositionY(), TROGLODYTE.GetSpeed());
-		//DrawPos();
-=======
-		TROGLODYTE.SetUnitPosition(TROGLODYTE.GetPositionX(), TROGLODYTE.GetPositionY());
->>>>>>> Stashed changes
+		MoveByTurn();
 		return true;
 	}
 public:
@@ -77,15 +72,38 @@ public:
 		DrawRect(UnitPosX - 38, UnitPosY + 5, 42 * UnitSPD, 42 * UnitSPD, olc::YELLOW);
 	}
 
-<<<<<<< Updated upstream
 	/////////TODO: Create a function that will allow to move creatures around the board depending on their speed.//////////////
-	//void DrawPos() 
-	//{
-	//	if (GetKey(olc::Key::A).bPressed)
-	//		DrawString(400, 256, "Mouse: " + std::to_string(GetMouseX()) + ", " + std::to_string(GetMouseY()), olc::BLACK, 3);
-	//} 
-=======
->>>>>>> Stashed changes
+	int GetMouseX()
+	{
+		if (GetMouse(0).bPressed)
+		{
+			return GetMouseX();
+		}
+	}
+
+	int GetMouseY()
+	{
+		if (GetMouse(0).bPressed)
+		{
+			return GetMouseY();
+		}
+	}
+
+	void MoveByTurn()
+	{
+		bool Action = false;
+		for (const auto& FastertUnit : BySpeed)
+		{
+			for (const auto& SlowerUnit : BySpeed)
+			{
+				if (FastertUnit->GetSpeed() > SlowerUnit->GetSpeed() && FastertUnit->ReturnAction() == false)
+				{
+					DrawReach(FastertUnit->GetPositionX(), FastertUnit->GetPositionY(), FastertUnit->GetSpeed());
+				}
+			}
+		}
+	}
+
 
 	static bool CompareSpeed(Units* Unit1, Units* Unit2) //Function working as a parameter for "sort" function which compares the speed of all units
 	{

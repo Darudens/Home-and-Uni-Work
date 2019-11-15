@@ -1,11 +1,11 @@
-﻿  Harpy.cpp
-  Hero.cpp
-  Minotaur.cpp
-  Source.cpp
-  Spell.cpp
-  SpellBook.cpp
-  troglodyte.cpp
-  Units.cpp
-  Generating Code...
-  LINK : D:\Home-and-Uni-Work\Assignment1Stratey\Debug\Assignment1Stratey.exe not found or not built by the last incremental link; performing full link
-  Assignment1Stratey.vcxproj -> D:\Home-and-Uni-Work\Assignment1Stratey\Debug\Assignment1Stratey.exe
+﻿  Source.cpp
+F:\HomeAndUniWork\Home-and-Uni-Work\Assignment1Stratey\Assignment1Stratey\Source.cpp(106,1): error C2660: 'std::vector<Units *,std::allocator<_Ty>>::pop_back': function does not take 1 arguments
+F:\HomeAndUniWork\Home-and-Uni-Work\Assignment1Stratey\Assignment1Stratey\Source.cpp(106,1): error C2660:         with
+F:\HomeAndUniWork\Home-and-Uni-Work\Assignment1Stratey\Assignment1Stratey\Source.cpp(106,1): error C2660:         [
+F:\HomeAndUniWork\Home-and-Uni-Work\Assignment1Stratey\Assignment1Stratey\Source.cpp(106,1): error C2660:             _Ty=Units *
+F:\HomeAndUniWork\Home-and-Uni-Work\Assignment1Stratey\Assignment1Stratey\Source.cpp(106,1): error C2660:         ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\vector(1279,10): message : see declaration of 'std::vector<Units *,std::allocator<_Ty>>::pop_back'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\vector(1279,10): message :         with
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\vector(1279,10): message :         [
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\vector(1279,10): message :             _Ty=Units *
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\vector(1279,10): message :         ]

@@ -42,11 +42,16 @@ public:
 			PosY = GetMouseY();
 		}
 	}
-	//void DrawSpeedGrid(int spd, int X, int Y)
-	//{
-	//	for (int x = 0; x < spd; x++)
-	//		DrawRect(X, Y, 42, 42, olc::BLACK);
-	//}
+	
+	void SetAction(bool State)
+	{
+		Action = State;
+	}
+
+	bool ReturnAction()
+	{
+		return Action;
+	}
 
 	int GetPositionX()
 	{
@@ -73,6 +78,7 @@ private:
 	int armour;
 	int speed;
 	int PosX, PosY;
+	bool Action = false;
 	olc::Sprite* UnitSprite;
 };
 

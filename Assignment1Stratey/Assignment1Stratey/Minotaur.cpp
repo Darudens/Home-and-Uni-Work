@@ -4,10 +4,10 @@
 #include "Hero.h"
 Minotaur::Minotaur(Hero* DungeonHero)
 {
-	CreateUnitSprite(new olc::Sprite("TroglodyteSprite.png"));
+	CreateUnitSprite(new olc::Sprite("Minotaur.png"));
 	SetStats(5 + DungeonHero->GetAttack(), 3 + DungeonHero->GetDefense(), 5);
 	SetPositionX(38);
-	SetPositionY(180);
+	SetPositionY(320);
 }
 
 Minotaur::Minotaur()
