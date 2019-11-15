@@ -4,7 +4,7 @@ namespace olc
 {
 	class Sprite;
 }
-class Units
+class Units : public olc::PixelGameEngine
 {
 public:
 	void SetStats(int hp, int def, int spd)
@@ -28,6 +28,25 @@ public:
 	{
 		PosY = Y;
 	}
+
+	void attack(int atk)
+	{
+		//TODO
+	}
+
+	void SetUnitPosition(int X, int Y)
+	{
+		if (GetKey(olc::Key::K).bPressed)
+		{
+			PosX = GetMouseX();
+			PosY = GetMouseY();
+		}
+	}
+	//void DrawSpeedGrid(int spd, int X, int Y)
+	//{
+	//	for (int x = 0; x < spd; x++)
+	//		DrawRect(X, Y, 42, 42, olc::BLACK);
+	//}
 
 	int GetPositionX()
 	{
