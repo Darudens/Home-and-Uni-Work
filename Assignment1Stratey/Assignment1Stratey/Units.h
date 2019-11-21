@@ -7,11 +7,12 @@ namespace olc
 class Units : public olc::PixelGameEngine
 {
 public:
-	void SetStats(int hp, int def, int spd)
+	void SetStats(int hp, int def, int spd, int atk)
 	{
 		health = hp;
 		armour = def;
 		speed = spd;
+		attack = atk;
 	}
 
 	void CreateUnitSprite(olc::Sprite* NewUnitSprite)
@@ -29,9 +30,29 @@ public:
 		PosY = Y;
 	}
 
-	void attack(int atk)
+	void DoAttack(int atk)
 	{
 		//TODO
+	}
+
+	void SetAllianceStatusToEnemy()
+	{
+		IsEnemy = true;
+	}
+	
+	void SetAllianceStatusToFriendly()
+	{
+		IsEnemy = false;
+	}
+
+	int CalculateDistanceToNearestenemy(int UnitPosX, int UnitPosY, int EnemyUnitPosX, int EnemyUnitPosY)
+	{
+		return UnitPosX - EnemyUnitPosY + UnitPosY - EnemyUnitPosY;
+	}
+
+	bool ReturnAlianceStatus()
+	{
+		return IsEnemy;
 	}
 
 	int GetPositionX()
@@ -49,12 +70,15 @@ public:
 		return speed;
 	}
 
+
 	olc::Sprite* GetSprite()
 	{
 		return UnitSprite;
 	}
 
 private:
+	bool IsEnemy;
+	int attack;
 	int health;
 	int armour;
 	int speed;

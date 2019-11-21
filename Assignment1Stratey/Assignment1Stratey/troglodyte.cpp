@@ -5,9 +5,10 @@
 troglodyte::troglodyte(Hero* DungeonHero)
 {
 	CreateUnitSprite(new olc::Sprite("TroglodyteSprite.png"));
-	SetStats(5 + DungeonHero->GetAttack(), 3 + DungeonHero->GetDefense(), 4);
+	SetStats(6, 3 + DungeonHero->GetDefense(), 4, 5 + DungeonHero->GetAttack());
 	SetPositionX(38);
 	SetPositionY(120);
+	SetAllianceStatusToFriendly();
 }
 
 troglodyte::troglodyte()

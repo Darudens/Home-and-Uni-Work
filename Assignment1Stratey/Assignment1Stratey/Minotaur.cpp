@@ -5,9 +5,10 @@
 Minotaur::Minotaur(Hero* DungeonHero)
 {
 	CreateUnitSprite(new olc::Sprite("Minotaur.png"));
-	SetStats(5 + DungeonHero->GetAttack(), 3 + DungeonHero->GetDefense(), 5);
+	SetStats(50, 3 + DungeonHero->GetDefense(), 5, 14 + DungeonHero->GetAttack());
 	SetPositionX(38);
 	SetPositionY(320);
+	SetAllianceStatusToFriendly();
 }
 
 Minotaur::Minotaur()

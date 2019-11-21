@@ -7,6 +7,9 @@
 #include "Minotaur.h"
 #include "Harpy.h"
 #include "Hero.h"
+#include "EnemyUnit.h"
+#define UNIT_OFFSET_X -46
+#define UNIT_OFFSET_Y -60
 class COSA : public olc::PixelGameEngine
 {
 public:
@@ -14,6 +17,7 @@ public:
 	Minotaur MINOTAUR;
 	Harpy HARPY;
 	Hero DACE;
+	EnemyUnit SKELETON;
 	bool Adventure;
 	int UnitID = 0;
 	COSA()
@@ -28,6 +32,7 @@ public:
 		BySpeed.push_back(&TROGLODYTE);
 		BySpeed.push_back(&MINOTAUR);
 		BySpeed.push_back(&HARPY);
+		BySpeed.push_back(&SKELETON);
 		std::sort(BySpeed.begin(), BySpeed.end(), &COSA::CompareSpeed); //Custom sort to which puts units in speed order to determin which creature goes first
 	}
 	olc::Sprite* Background;  //creating a pointer to background file.
@@ -58,6 +63,7 @@ public:
 			DrawPartialSprite(TROGLODYTE.GetPositionX(), TROGLODYTE.GetPositionY(), TROGLODYTE.GetSprite(), 21, 13, 60, 91, 1);
 			DrawPartialSprite(MINOTAUR.GetPositionX(), MINOTAUR.GetPositionY(), MINOTAUR.GetSprite(), 21, 13, 60, 91, 1);
 			DrawPartialSprite(HARPY.GetPositionX(), HARPY.GetPositionY(), HARPY.GetSprite(), 21, 13, 60, 91, 1);
+			DrawPartialSprite(SKELETON.GetPositionX(), SKELETON.GetPositionY(), SKELETON.GetSprite(), 1040, 34, 64, 98);
 			MoveByTurn();
 		}
 		return true;
@@ -68,43 +74,33 @@ public:
 	{
 		DrawSprite(0, 0, Background, 1);
 	}
-	//Function to draw grid for units to spawn and move around.
-	void DrawGrid()
-	{
-		for (int x = 0; x < ScreenWidth(); x += 42)
-			for (int y = 84; y < ScreenHeight(); y += 42)
-			{
-				DrawRect(x, y, 42, 42, GridColour);
-			}
-	}
 
 	void DrawReach(int UnitPosX, int UnitPosY, int UnitSPD) //Draws area of available moves depending on creatures speed
 	{
 		DrawRect(UnitPosX - 38, UnitPosY + 5, 42 * UnitSPD, 42 * UnitSPD, olc::YELLOW);
 	}
 
+
 	/////////TODO: Create a function that will allow to move creatures around the board depending on their speed.//////////////
-	int GetMouseX()
-	{
-		if (GetMouse(0).bPressed)
-		{
-			return GetMouseX();
-		}
-	}
-
-	int GetMouseY()
-	{
-		if (GetMouse(0).bPressed)
-		{
-			return GetMouseY();
-		}
-	}
-
 	void MoveByTurn()
 	{
+		int directionX;
+		int directionY;
 		DrawReach(BySpeed[UnitID]->GetPositionX(), BySpeed[UnitID]->GetPositionY(), BySpeed[UnitID]->GetSpeed());
-		if (GetKey(olc::Key::C).bPressed)
+		if (GetMouse(0).bPressed && BySpeed[UnitID]->ReturnAlianceStatus() == false 
+			&& GetMouseX() < BySpeed[UnitID]->GetPositionX() + BySpeed[UnitID]->GetSpeed() * 42
+			&& GetMouseY() < BySpeed[UnitID]->GetPositionY() + BySpeed[UnitID]->GetSpeed() * 42)
 		{
+			BySpeed[UnitID]->SetPositionX(GetMouseX() + UNIT_OFFSET_X);
+			BySpeed[UnitID]->SetPositionY(GetMouseY() + UNIT_OFFSET_Y);
+			UnitID += 1;
+		}
+		else if (BySpeed[UnitID]->ReturnAlianceStatus() == true)
+		{
+			directionX = BySpeed[0]->GetPositionX() - BySpeed[UnitID]->GetPositionX();
+			directionY = BySpeed[0]->GetPositionY() - BySpeed[UnitID]->GetPositionY();
+			BySpeed[UnitID]->SetPositionX(BySpeed[UnitID]->GetPositionX() + (directionX / BySpeed[UnitID]->GetSpeed()));
+			BySpeed[UnitID]->SetPositionY(BySpeed[UnitID]->GetPositionY() + (directionY / BySpeed[UnitID]->GetSpeed()));
 			UnitID += 1;
 		}
 		if (UnitID == BySpeed.size())
