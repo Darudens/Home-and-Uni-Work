@@ -14,11 +14,11 @@ public:
 	Minotaur MINOTAUR;
 	Harpy HARPY;
 	Hero DACE;
+	bool Adventure;
 	COSA()
 	{
 		sAppName = "COSA";
 		SetPixelMode(olc::Pixel::MASK);
-		Background = new olc::Sprite("BattleBackground.png");
 		DACE = Hero(20, 4, 3, 0, 0);
 		DACE.CreateHeroSprite(new olc::Sprite("Heroes.png"));
 		TROGLODYTE = troglodyte(&DACE);
@@ -36,19 +36,27 @@ public:
 	//game loop
 	bool OnUserCreate() override //Function called once during the runtime creates static components
 	{
+		Adventure = true;
+		Background = new olc::Sprite("Adventure.png");
 		DrawBackground();
-		//DrawGrid();
-		DrawPartialSprite(DACE.GetPosX(), DACE.GetPosY(), DACE.GetSprite(), 34, 1782, 72, 118, 1);
 		return true;
 	}
 
 	bool OnUserUpdate(float fElapsedTime) override //Function called every tick
 	{
-		
-		DrawPartialSprite(TROGLODYTE.GetPositionX(), TROGLODYTE.GetPositionY(), TROGLODYTE.GetSprite(), 21, 13, 60, 91, 1);
-		DrawPartialSprite(MINOTAUR.GetPositionX(), MINOTAUR.GetPositionY(), MINOTAUR.GetSprite(), 21, 13, 60, 91, 1);
-		DrawPartialSprite(HARPY.GetPositionX(), HARPY.GetPositionY(), HARPY.GetSprite(), 21, 13, 60, 91, 1);
-		MoveByTurn();
+		if (GetKey(olc::Key::A).bPressed)
+		{
+			Adventure = false;
+			Clear(olc::WHITE);
+			Background = new olc::Sprite("BattleBackground.png");
+		}
+		if (Adventure == false)
+		{
+			DrawPartialSprite(TROGLODYTE.GetPositionX(), TROGLODYTE.GetPositionY(), TROGLODYTE.GetSprite(), 21, 13, 60, 91, 1);
+			DrawPartialSprite(MINOTAUR.GetPositionX(), MINOTAUR.GetPositionY(), MINOTAUR.GetSprite(), 21, 13, 60, 91, 1);
+			DrawPartialSprite(HARPY.GetPositionX(), HARPY.GetPositionY(), HARPY.GetSprite(), 21, 13, 60, 91, 1);
+			MoveByTurn();
+		}
 		return true;
 	}
 public:
@@ -91,17 +99,17 @@ public:
 
 	void MoveByTurn()
 	{
-		bool Action = false;
-		for (const auto& FastertUnit : BySpeed)
+		int UnitID = 0;
+		DrawReach(BySpeed[UnitID]->GetPositionX(), BySpeed[UnitID]->GetPositionY(), BySpeed[UnitID]->GetSpeed());
+		if (GetKey(olc::Key::A).bPressed && UnitID <= BySpeed.size())
 		{
-			for (const auto& SlowerUnit : BySpeed)
-			{
-				if (FastertUnit->GetSpeed() > SlowerUnit->GetSpeed() && FastertUnit->ReturnAction() == false)
-				{
-					DrawReach(FastertUnit->GetPositionX(), FastertUnit->GetPositionY(), FastertUnit->GetSpeed());
-				}
-			}
+			UnitID += 1;
 		}
+		else if (UnitID > BySpeed.size())
+		{
+			UnitID = 0;
+		}
+
 	}
 
 

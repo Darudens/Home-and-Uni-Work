@@ -34,25 +34,6 @@ public:
 		//TODO
 	}
 
-	void SetUnitPosition(int X, int Y)
-	{
-		if (GetKey(olc::Key::K).bPressed)
-		{
-			PosX = GetMouseX();
-			PosY = GetMouseY();
-		}
-	}
-	
-	void SetAction(bool State)
-	{
-		Action = State;
-	}
-
-	bool ReturnAction()
-	{
-		return Action;
-	}
-
 	int GetPositionX()
 	{
 		return PosX;
@@ -78,7 +59,6 @@ private:
 	int armour;
 	int speed;
 	int PosX, PosY;
-	bool Action = false;
 	olc::Sprite* UnitSprite;
 };
 
