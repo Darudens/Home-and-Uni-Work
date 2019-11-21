@@ -15,6 +15,7 @@ public:
 	Harpy HARPY;
 	Hero DACE;
 	bool Adventure;
+	int UnitID = 0;
 	COSA()
 	{
 		sAppName = "COSA";
@@ -52,6 +53,8 @@ public:
 		}
 		if (Adventure == false)
 		{
+			DrawBackground();
+			DrawPartialSprite(DACE.GetPosX(), DACE.GetPosY(), DACE.GetSprite(), 21, 15, 89, 125, 1);
 			DrawPartialSprite(TROGLODYTE.GetPositionX(), TROGLODYTE.GetPositionY(), TROGLODYTE.GetSprite(), 21, 13, 60, 91, 1);
 			DrawPartialSprite(MINOTAUR.GetPositionX(), MINOTAUR.GetPositionY(), MINOTAUR.GetSprite(), 21, 13, 60, 91, 1);
 			DrawPartialSprite(HARPY.GetPositionX(), HARPY.GetPositionY(), HARPY.GetSprite(), 21, 13, 60, 91, 1);
@@ -99,13 +102,12 @@ public:
 
 	void MoveByTurn()
 	{
-		int UnitID = 0;
 		DrawReach(BySpeed[UnitID]->GetPositionX(), BySpeed[UnitID]->GetPositionY(), BySpeed[UnitID]->GetSpeed());
-		if (GetKey(olc::Key::A).bPressed && UnitID <= BySpeed.size())
+		if (GetKey(olc::Key::C).bPressed)
 		{
 			UnitID += 1;
 		}
-		else if (UnitID > BySpeed.size())
+		if (UnitID == BySpeed.size())
 		{
 			UnitID = 0;
 		}
