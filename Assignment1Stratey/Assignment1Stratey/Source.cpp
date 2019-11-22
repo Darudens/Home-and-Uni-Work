@@ -7,7 +7,7 @@
 #include "Minotaur.h"
 #include "Harpy.h"
 #include "Hero.h"
-#include "EnemyUnit.h"
+#include "Skeleton.h"
 #define UNIT_OFFSET_X -46
 #define UNIT_OFFSET_Y -60
 class COSA : public olc::PixelGameEngine
@@ -17,7 +17,7 @@ public:
 	Minotaur MINOTAUR;
 	Harpy HARPY;
 	Hero DACE;
-	EnemyUnit SKELETON;
+	Skeleton SKELETON;
 	bool Adventure;
 	int UnitID = 0;
 	COSA()
@@ -43,13 +43,14 @@ public:
 	bool OnUserCreate() override //Function called once during the runtime creates static components
 	{
 		Adventure = true;
-		Background = new olc::Sprite("Adventure.png");
+		Background = new olc::Sprite("AdventureBackground.png");
 		DrawBackground();
 		return true;
 	}
 
 	bool OnUserUpdate(float fElapsedTime) override //Function called every tick
 	{
+
 		if (GetKey(olc::Key::A).bPressed)
 		{
 			Adventure = false;
@@ -77,7 +78,7 @@ public:
 
 	void DrawReach(int UnitPosX, int UnitPosY, int UnitSPD) //Draws area of available moves depending on creatures speed
 	{
-		DrawRect(UnitPosX - 38, UnitPosY + 5, 42 * UnitSPD, 42 * UnitSPD, olc::YELLOW);
+		DrawRect(UnitPosX + UNIT_OFFSET_X, UnitPosY + UNIT_OFFSET_Y, 42 * UnitSPD, 42 * UnitSPD, olc::YELLOW);
 	}
 
 

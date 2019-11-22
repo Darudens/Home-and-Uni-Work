@@ -39,7 +39,7 @@
     <ClCompile Include="Minotaur.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyUnit.cpp">
+    <ClCompile Include="Skeleton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,7 +65,7 @@
     <ClInclude Include="Minotaur.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyUnit.h">
+    <ClInclude Include="Skeleton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
