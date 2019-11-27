@@ -8,6 +8,9 @@
 #include "Harpy.h"
 #include "Hero.h"
 #include "Skeleton.h"
+#include "Spell.h"
+#include "FireBall.h"
+#include "SpellBook.h"
 #define UNIT_OFFSET_X -46
 #define UNIT_OFFSET_Y -60
 class COSA : public olc::PixelGameEngine
@@ -18,7 +21,10 @@ public:
 	Harpy HARPY;
 	Hero DACE;
 	Skeleton SKELETON;
+	FireBall FIREBALL;
+	SpellBook SPELLBOOK;
 	bool Adventure;
+	bool SpellBookIsOpen;
 	int UnitID = 0;
 	COSA()
 	{
@@ -45,6 +51,7 @@ public:
 		Adventure = true;
 		Background = new olc::Sprite("AdventureBackground.png");
 		DrawBackground();
+		DrawPartialSprite(500, 350, FIREBALL.GetSprite(), 55, 443, 47, 49, 1);
 		return true;
 	}
 
@@ -67,6 +74,7 @@ public:
 			DrawPartialSprite(SKELETON.GetPositionX(), SKELETON.GetPositionY(), SKELETON.GetSprite(), 1040, 34, 64, 98);
 			MoveByTurn();
 		}
+		DrawSpellBook();
 		return true;
 	}
 public:
@@ -81,6 +89,13 @@ public:
 		DrawRect(UnitPosX + UNIT_OFFSET_X, UnitPosY + UNIT_OFFSET_Y, 42 * UnitSPD, 42 * UnitSPD, olc::YELLOW);
 	}
 
+	void DrawSpellBook()
+	{
+		if (GetKey(olc::Key::B).bHeld)
+		{
+			DrawPartialSprite(0, 0, SPELLBOOK.ReturnSpellBookSprite(), 0, 0, 619, 594, 1);
+		}
+	}
 
 	/////////TODO: Create a function that will allow to move creatures around the board depending on their speed.//////////////
 	void MoveByTurn()

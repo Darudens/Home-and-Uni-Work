@@ -1,9 +1,13 @@
 #pragma once
-#include <list>
+#include "olcPixelGameEngine.h"
 class Spell;
 class SpellBook
 {
+public:
+	SpellBook();
+	void AssignSpellBookSprite(olc::Sprite* ThisSpellBookSprite);
+	olc::Sprite* ReturnSpellBookSprite();
 private:
-	std::list<Spell> Spells;
+	olc::Sprite* SpellBookSprite;
 };
 
