@@ -45,6 +45,12 @@
     <ClCompile Include="FireBall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PickUp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PickUpSpell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Units.h">
@@ -72,6 +78,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FireBall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PickUp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PickUpSpell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

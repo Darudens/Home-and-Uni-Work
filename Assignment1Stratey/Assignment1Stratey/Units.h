@@ -20,6 +20,11 @@ public:
 		UnitSprite = NewUnitSprite;
 	}
 
+	void setDefence(int def)
+	{
+		armour += def;
+	}
+
 	void SetPositionX(int X)
 	{
 		PosX = X;
@@ -30,9 +35,9 @@ public:
 		PosY = Y;
 	}
 
-	void DoAttack(int atk)
+	void TakeDamage(int DamageTaken)
 	{
-		//TODO
+		health -= DamageTaken;
 	}
 
 	void SetAllianceStatusToEnemy()
@@ -43,6 +48,11 @@ public:
 	void SetAllianceStatusToFriendly()
 	{
 		IsEnemy = false;
+	}
+
+	int CalculateDamage(int atk, int def)
+	{
+		return atk - def;
 	}
 
 	int CalculateDistanceToNearestenemy(int UnitPosX, int UnitPosY, int EnemyUnitPosX, int EnemyUnitPosY)
@@ -65,12 +75,25 @@ public:
 		return PosY;
 	}
 
+	int GetHeath()
+	{
+		return health;
+	}
+
 	int GetSpeed()
 	{
 		return speed;
 	}
 
+	int GetAttack()
+	{
+		return attack;
+	}
 
+	int GetArmour()
+	{
+		return armour;
+	}
 	olc::Sprite* GetSprite()
 	{
 		return UnitSprite;

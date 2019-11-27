@@ -124,6 +124,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FireBall.cpp" />
+    <ClCompile Include="PickUp.cpp" />
+    <ClCompile Include="PickUpSpell.cpp" />
     <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="Harpy.cpp" />
     <ClCompile Include="Hero.cpp" />
@@ -136,6 +138,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FireBall.h" />
+    <ClInclude Include="PickUp.h" />
+    <ClInclude Include="PickUpSpell.h" />
     <ClInclude Include="Skeleton.h" />
     <ClInclude Include="Harpy.h" />
     <ClInclude Include="Hero.h" />

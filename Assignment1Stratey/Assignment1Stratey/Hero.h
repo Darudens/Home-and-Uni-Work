@@ -1,4 +1,5 @@
 #pragma once
+#include "SpellBook.h"
 namespace olc
 {
 	class Sprite;
@@ -29,9 +30,21 @@ public:
 	{
 		return PosY;
 	}
+	SpellBook* ReturnSpellBook()
+	{
+		return &HeroesSpellBook;
+	}
 	olc::Sprite* GetSprite()
 	{
 		return NewHeroClass;
+	}
+	void SetPositionX(int MousePosX)
+	{
+		PosX = MousePosX;
+	}
+	void SetPositionY(int MousePosY)
+	{
+		PosY = MousePosY;
 	}
 	void CreateHeroSprite(olc::Sprite* NewHeroSprite)
 	{
@@ -42,6 +55,7 @@ private:
 	int atk;
 	int def;
 	int PosX, PosY;
+	SpellBook HeroesSpellBook;
 	olc::Sprite* NewHeroClass;
 };
 
