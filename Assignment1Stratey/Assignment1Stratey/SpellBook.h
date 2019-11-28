@@ -12,6 +12,7 @@ public:
 		Spells.push_back(NewSpell);
 	}
 	olc::Sprite* ReturnSpellBookSprite();
+	int ReturnSpellBookSize() { return Spells.size(); };
 private:
 	olc::Sprite* SpellBookSprite;
 	std::list<Spell*> Spells;

@@ -50,6 +50,11 @@ public:
 		IsEnemy = false;
 	}
 
+	void SetUnitID(int ID)
+	{
+		UnitID = ID;
+	}
+
 	int CalculateDamage(int atk, int def)
 	{
 		return atk - def;
@@ -58,6 +63,11 @@ public:
 	int CalculateDistanceToNearestenemy(int UnitPosX, int UnitPosY, int EnemyUnitPosX, int EnemyUnitPosY)
 	{
 		return UnitPosX - EnemyUnitPosY + UnitPosY - EnemyUnitPosY;
+	}
+
+	int GetUnitID()
+	{
+		return UnitID;
 	}
 
 	bool ReturnAlianceStatus()
@@ -106,6 +116,7 @@ private:
 	int armour;
 	int speed;
 	int PosX, PosY;
+	int UnitID;
 	olc::Sprite* UnitSprite;
 };
 

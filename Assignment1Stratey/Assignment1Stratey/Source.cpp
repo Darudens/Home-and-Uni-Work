@@ -23,8 +23,8 @@ public:
 	Harpy HARPY;
 	Hero DACE;
 	Skeleton SKELETON;
-	FireBall FIREBALL;
 	SpellBook SPELLBOOK;
+	FireBall FIREBALL;
 	bool Adventure;
 	bool SpellBookIsOpen = false;
 	int UnitID = 0;
@@ -35,6 +35,7 @@ public:
 		TROGLODYTE = troglodyte(&DACE);
 		MINOTAUR = Minotaur(&DACE);
 		HARPY = Harpy(&DACE);
+		MouseSprite = new olc::Sprite("MouseCoursor.png");
 		BySpeed.push_back(&TROGLODYTE);
 		BySpeed.push_back(&MINOTAUR);
 		BySpeed.push_back(&HARPY);
@@ -42,6 +43,7 @@ public:
 		std::sort(BySpeed.begin(), BySpeed.end(), &COSA::CompareSpeed); //Custom sort to which puts units in speed order to determin which creature goes first
 	}
 	olc::Sprite* Background;  //creating a pointer to background file.
+	olc::Sprite* MouseSprite;
 	std::vector<Units*> BySpeed; //Vector of class Units
 public:
 	//game loop
@@ -52,6 +54,7 @@ public:
 		Adventure = true;
 		Background = new olc::Sprite("AdventureBackground.png");
 		DACE.CreateHeroSprite(new olc::Sprite("HeroAdventure.png"));
+		//DACE.ReturnSpellBook()->AddSpell(FIREBALL);
 		return true;
 	}
 
@@ -63,6 +66,7 @@ public:
 			DrawPartialSprite(500, 350, FIREBALL.GetSprite(), 55, 443, 47, 49, 1);
 			DrawPartialSprite(DACE.GetPosX(), DACE.GetPosY(), DACE.GetSprite(), 4044, 646, 68, 60, 1);
 			MoveHero();
+			DACE.ReturnSpellBook()->AddSpell(&FIREBALL);
 		}
 		if (GetKey(olc::Key::A).bPressed)
 		{
@@ -99,6 +103,11 @@ public:
 		DrawRect(UnitPosX + UNIT_OFFSET_X, UnitPosY + UNIT_OFFSET_Y, 42 * UnitSPD, 42 * UnitSPD, olc::YELLOW);
 	}
 
+	int ReturnReach(int SizeInPixels, int UnitSPD)
+	{
+		return SizeInPixels * UnitSPD;
+	}
+
 	void DrawSpellBook()
 	{
 		if (GetKey(olc::Key::B).bPressed)
@@ -108,9 +117,14 @@ public:
 		if (SpellBookIsOpen == true)
 		{
 			DrawPartialSprite(0, 0, SPELLBOOK.ReturnSpellBookSprite(), 0, 0, 619, 594, 1);
+			DrawString(426, 420, std::string(std::to_string(DACE.GetMana())), olc::WHITE, 1);
+			DrawPartialSprite(111, 92, FIREBALL.GetSprite(), 55, 443, 47, 49, 1);
+			DrawString(110, 153, std::string(FIREBALL.ReturnSpellName()), olc::WHITE, 1);
+			DrawString(110, 163, std::string("Mana required: ") + (std::to_string(FIREBALL.GetManaRequired())), olc::WHITE, 1);
+			DrawString(110, 173, std::string("Damage: ") + (std::to_string(FIREBALL.ReturnDamage())), olc::WHITE, 1);
 		}
-
 	}
+
 
 	void MoveHero()
 	{
@@ -128,21 +142,31 @@ public:
 		int directionY = BySpeed[0]->GetPositionY() - BySpeed[UnitID]->GetPositionY();
 
 		DrawReach(BySpeed[UnitID]->GetPositionX(), BySpeed[UnitID]->GetPositionY(), BySpeed[UnitID]->GetSpeed());
-
+		BySpeed[UnitID]->SetUnitID(UnitID);
 		if (GetMouse(0).bPressed && BySpeed[UnitID]->ReturnAlianceStatus() == false 
 			&& GetMouseX() < BySpeed[UnitID]->GetPositionX() + BySpeed[UnitID]->GetSpeed() * 42
 			&& GetMouseY() < BySpeed[UnitID]->GetPositionY() + BySpeed[UnitID]->GetSpeed() * 42)
 		{
 			BySpeed[UnitID]->SetPositionX(GetMouseX() + UNIT_OFFSET_X);
 			BySpeed[UnitID]->SetPositionY(GetMouseY() + UNIT_OFFSET_Y);
-				for (auto& b : BySpeed)
+			for (auto& b : BySpeed)
+			{
+				if (b->ReturnAlianceStatus() == true &&
+					b->GetPositionX() <= BySpeed[UnitID]->GetPositionX() + ReturnReach(42, BySpeed[UnitID]->GetSpeed())
+					&& b->GetPositionY() <= BySpeed[UnitID]->GetPositionY() + ReturnReach(42, BySpeed[UnitID]->GetSpeed()) && b->GetHeath() > 0)
 				{
-					if (b->ReturnAlianceStatus() == true)
-					{
-						b->TakeDamage(BySpeed[UnitID]->CalculateDamage(BySpeed[UnitID]->GetAttack(), b->GetArmour()));
-						break;
-					}
+					b->TakeDamage(BySpeed[UnitID]->CalculateDamage(BySpeed[UnitID]->GetAttack(), b->GetArmour()));
+					break;
 				}
+				else if (b->GetHeath() <= 0)
+				{
+					BySpeed.erase(BySpeed.begin() + b->GetUnitID());
+				}
+				else if (BySpeed[UnitID]->GetHeath() <= 0)
+				{
+					BySpeed.erase(BySpeed.begin() + BySpeed[UnitID]->GetUnitID());
+				}
+			}
 			UnitID += 1;
 		}
 		else if (BySpeed[UnitID]->ReturnAlianceStatus() == true)
