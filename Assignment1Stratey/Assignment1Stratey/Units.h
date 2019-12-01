@@ -55,6 +55,11 @@ public:
 		UnitID = ID;
 	}
 
+	void DeleteUnitSprite()
+	{
+		delete UnitSprite;
+	}
+
 	int CalculateDamage(int atk, int def)
 	{
 		return atk - def;

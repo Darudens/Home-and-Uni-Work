@@ -2,5 +2,5 @@
 #include "olcPixelGameEngine.h"
 Hero::Hero()
 {
-	
+
 }

@@ -1,6 +1,7 @@
 #define OLC_PGE_APPLICATION
 #include <iostream>
 #include <vector>
+#include <math.h>
 #include "olcPixelGameEngine.h"
 #include "Units.h"
 #include "troglodyte.h"
@@ -11,6 +12,7 @@
 #include "Spell.h"
 #include "FireBall.h"
 #include "SpellBook.h"
+#include "PickUpSpell.h"
 #define UNIT_OFFSET_X -46
 #define UNIT_OFFSET_Y -60
 #define TEXT_OFFSET_X 30
@@ -25,9 +27,13 @@ public:
 	Skeleton SKELETON;
 	SpellBook SPELLBOOK;
 	FireBall FIREBALL;
+	PickUpSpell PickUp;
 	bool Adventure;
 	bool SpellBookIsOpen = false;
 	int UnitID = 0;
+	bool DrawSpell = true;
+	bool EnemiesAlive = true;
+	bool IsSpellSelected = false;
 	COSA()
 	{
 		sAppName = "COSA";
@@ -35,6 +41,7 @@ public:
 		TROGLODYTE = troglodyte(&DACE);
 		MINOTAUR = Minotaur(&DACE);
 		HARPY = Harpy(&DACE);
+		PickUp = PickUpSpell(&FIREBALL);
 		MouseSprite = new olc::Sprite("MouseCoursor.png");
 		BySpeed.push_back(&TROGLODYTE);
 		BySpeed.push_back(&MINOTAUR);
@@ -63,10 +70,13 @@ public:
 		if (Adventure == true)
 		{
 			DrawBackground();
-			DrawPartialSprite(500, 350, FIREBALL.GetSprite(), 55, 443, 47, 49, 1);
 			DrawPartialSprite(DACE.GetPosX(), DACE.GetPosY(), DACE.GetSprite(), 4044, 646, 68, 60, 1);
 			MoveHero();
-			DACE.ReturnSpellBook()->AddSpell(&FIREBALL);
+			PickUp.CheckItemCollision(DACE.GetPosX(), DACE.GetPosY(), 500 + 47, 350 + 49, DrawSpell ,&DACE);
+			if(DrawSpell == true)
+			{
+				DrawPartialSprite(500, 350, FIREBALL.GetAdventureSprite(), 55, 443, 47, 49, 1);
+			}
 		}
 		if (GetKey(olc::Key::A).bPressed)
 		{
@@ -84,7 +94,10 @@ public:
 			DrawPartialSprite(MINOTAUR.GetPositionX(), MINOTAUR.GetPositionY(), MINOTAUR.GetSprite(), 21, 13, 60, 91, 1);
 			DrawPartialSprite(HARPY.GetPositionX(), HARPY.GetPositionY(), HARPY.GetSprite(), 21, 13, 60, 91, 1);
 			//DrawString(HARPY.GetPositionX(), HARPY.GetPositionY(), std::string(std::to_string(HARPY.GetHeath())), olc::WHITE, 1);
-			DrawPartialSprite(SKELETON.GetPositionX(), SKELETON.GetPositionY(), SKELETON.GetSprite(), 1040, 34, 64, 98);
+			if (EnemiesAlive == true)
+			{
+				DrawPartialSprite(SKELETON.GetPositionX(), SKELETON.GetPositionY(), SKELETON.GetSprite(), 1040, 34, 64, 98);
+			}
 			DrawHealth();
 			BattleTurnFaze();
 		}
@@ -116,15 +129,22 @@ public:
 		}
 		if (SpellBookIsOpen == true)
 		{
-			DrawPartialSprite(0, 0, SPELLBOOK.ReturnSpellBookSprite(), 0, 0, 619, 594, 1);
-			DrawString(426, 420, std::string(std::to_string(DACE.GetMana())), olc::WHITE, 1);
-			DrawPartialSprite(111, 92, FIREBALL.GetSprite(), 55, 443, 47, 49, 1);
-			DrawString(110, 153, std::string(FIREBALL.ReturnSpellName()), olc::WHITE, 1);
-			DrawString(110, 163, std::string("Mana required: ") + (std::to_string(FIREBALL.GetManaRequired())), olc::WHITE, 1);
-			DrawString(110, 173, std::string("Damage: ") + (std::to_string(FIREBALL.ReturnDamage())), olc::WHITE, 1);
+			if (DACE.ReturnSpellBook()->ReturnSpellBookSize() > 0)
+			{
+				DrawPartialSprite(0, 0, SPELLBOOK.ReturnSpellBookSprite(), 0, 0, 619, 594, 1);
+				DrawString(426, 420, std::string(std::to_string(DACE.GetMana())), olc::WHITE, 1);
+				DrawPartialSprite(111, 92, FIREBALL.GetSprite(), 55, 443, 47, 49, 1);
+				DrawString(110, 153, std::string(FIREBALL.ReturnSpellName()), olc::WHITE, 1);
+				DrawString(110, 163, std::string("Mana required: ") + (std::to_string(FIREBALL.GetManaRequired())), olc::WHITE, 1);
+				DrawString(110, 173, std::string("Damage: ") + (std::to_string(FIREBALL.ReturnDamage())), olc::WHITE, 1);
+			}
+			else if (DACE.ReturnSpellBook()->ReturnSpellBookSize() == 0)
+			{
+				DrawPartialSprite(0, 0, SPELLBOOK.ReturnSpellBookSprite(), 0, 0, 619, 594, 1);
+				DrawString(426, 420, std::string(std::to_string(DACE.GetMana())), olc::WHITE, 1);
+			}
 		}
 	}
-
 
 	void MoveHero()
 	{
@@ -140,20 +160,22 @@ public:
 	{
 		int directionX = BySpeed[0]->GetPositionX() - BySpeed[UnitID]->GetPositionX() - UNIT_OFFSET_X;
 		int directionY = BySpeed[0]->GetPositionY() - BySpeed[UnitID]->GetPositionY();
-
+		//FIREBALL.CastSpell(47, 49, SpellBookIsOpen, IsSpellSelected);
 		DrawReach(BySpeed[UnitID]->GetPositionX(), BySpeed[UnitID]->GetPositionY(), BySpeed[UnitID]->GetSpeed());
 		BySpeed[UnitID]->SetUnitID(UnitID);
 		if (GetMouse(0).bPressed && BySpeed[UnitID]->ReturnAlianceStatus() == false 
-			&& GetMouseX() < BySpeed[UnitID]->GetPositionX() + BySpeed[UnitID]->GetSpeed() * 42
-			&& GetMouseY() < BySpeed[UnitID]->GetPositionY() + BySpeed[UnitID]->GetSpeed() * 42)
+			&& GetMouseX() <= BySpeed[UnitID]->GetPositionX() + UNIT_OFFSET_X + BySpeed[UnitID]->GetSpeed() * 42
+			&& GetMouseY() <= BySpeed[UnitID]->GetPositionY() + UNIT_OFFSET_Y + BySpeed[UnitID]->GetSpeed() * 42 
+			&& GetMouseX() > BySpeed[UnitID]->GetPositionX() + UNIT_OFFSET_X - BySpeed[UnitID]->GetSpeed() * 2
+			&& GetMouseY() > BySpeed[UnitID]->GetPositionY() + UNIT_OFFSET_Y - BySpeed[UnitID]->GetSpeed() * 2)
 		{
 			BySpeed[UnitID]->SetPositionX(GetMouseX() + UNIT_OFFSET_X);
 			BySpeed[UnitID]->SetPositionY(GetMouseY() + UNIT_OFFSET_Y);
 			for (auto& b : BySpeed)
 			{
 				if (b->ReturnAlianceStatus() == true &&
-					b->GetPositionX() <= BySpeed[UnitID]->GetPositionX() + ReturnReach(42, BySpeed[UnitID]->GetSpeed())
-					&& b->GetPositionY() <= BySpeed[UnitID]->GetPositionY() + ReturnReach(42, BySpeed[UnitID]->GetSpeed()) && b->GetHeath() > 0)
+					b->GetPositionX() < BySpeed[UnitID]->GetPositionX() + UNIT_OFFSET_X + ReturnReach(42, BySpeed[UnitID]->GetSpeed())
+					&& b->GetPositionY() < BySpeed[UnitID]->GetPositionY() + UNIT_OFFSET_Y + ReturnReach(42, BySpeed[UnitID]->GetSpeed()) && b->GetHeath() > 0)
 				{
 					b->TakeDamage(BySpeed[UnitID]->CalculateDamage(BySpeed[UnitID]->GetAttack(), b->GetArmour()));
 					break;
@@ -161,6 +183,8 @@ public:
 				else if (b->GetHeath() <= 0)
 				{
 					BySpeed.erase(BySpeed.begin() + b->GetUnitID());
+					EnemiesAlive = false;
+					b->DeleteUnitSprite();
 				}
 				else if (BySpeed[UnitID]->GetHeath() <= 0)
 				{
@@ -177,7 +201,7 @@ public:
 		}
 		if (GetKey(olc::Key::SPACE).bPressed)
 		{
-			BySpeed[UnitID]->setDefence(3);
+			BySpeed[UnitID]->setDefence(0);
 			UnitID += 1;
 		}
 		if (UnitID == BySpeed.size())

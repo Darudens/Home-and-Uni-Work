@@ -13,6 +13,10 @@ public:
 	}
 	olc::Sprite* ReturnSpellBookSprite();
 	int ReturnSpellBookSize() { return Spells.size(); };
+	const std::list<Spell*>& GetSpells() const
+	{
+		return Spells;
+	}
 private:
 	olc::Sprite* SpellBookSprite;
 	std::list<Spell*> Spells;

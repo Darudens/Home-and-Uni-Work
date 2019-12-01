@@ -30,6 +30,10 @@ public:
 	{
 		return PosY;
 	}
+	int HeroCollider(int Height, int Width)
+	{
+		return Height + Width;
+	}
 	SpellBook* ReturnSpellBook()
 	{
 		return &HeroesSpellBook;
