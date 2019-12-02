@@ -109,6 +109,7 @@ public:
 	{
 		return armour;
 	}
+	
 	olc::Sprite* GetSprite()
 	{
 		return UnitSprite;

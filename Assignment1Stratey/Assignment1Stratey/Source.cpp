@@ -42,7 +42,6 @@ public:
 		MINOTAUR = Minotaur(&DACE);
 		HARPY = Harpy(&DACE);
 		PickUp = PickUpSpell(&FIREBALL);
-		MouseSprite = new olc::Sprite("MouseCoursor.png");
 		BySpeed.push_back(&TROGLODYTE);
 		BySpeed.push_back(&MINOTAUR);
 		BySpeed.push_back(&HARPY);
@@ -50,7 +49,6 @@ public:
 		std::sort(BySpeed.begin(), BySpeed.end(), &COSA::CompareSpeed); //Custom sort to which puts units in speed order to determin which creature goes first
 	}
 	olc::Sprite* Background;  //creating a pointer to background file.
-	olc::Sprite* MouseSprite;
 	std::vector<Units*> BySpeed; //Vector of class Units
 public:
 	//game loop
@@ -61,7 +59,6 @@ public:
 		Adventure = true;
 		Background = new olc::Sprite("AdventureBackground.png");
 		DACE.CreateHeroSprite(new olc::Sprite("HeroAdventure.png"));
-		//DACE.ReturnSpellBook()->AddSpell(FIREBALL);
 		return true;
 	}
 
@@ -72,7 +69,6 @@ public:
 			DrawBackground();
 			DrawPartialSprite(DACE.GetPosX(), DACE.GetPosY(), DACE.GetSprite(), 4044, 646, 68, 60, 1);
 			MoveHero();
-			PickUp.CheckItemCollision(DACE.GetPosX(), DACE.GetPosY(), 500 + 47, 350 + 49, DrawSpell ,&DACE);
 			if(DrawSpell == true)
 			{
 				DrawPartialSprite(500, 350, FIREBALL.GetAdventureSprite(), 55, 443, 47, 49, 1);
@@ -102,6 +98,7 @@ public:
 			BattleTurnFaze();
 		}
 		DrawSpellBook();
+		PickUp.CheckItemCollision(DACE.GetPosX(), DACE.GetPosY(), 500 + 47, 350 + 49, DrawSpell, &DACE);
 		return true;
 	}
 public:
