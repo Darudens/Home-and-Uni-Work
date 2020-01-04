@@ -1,0 +1,8 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(995,5): warning MSB8027: Two or more files with the name of GLee.c will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are ..\GLee.c, ..\shared\GLee.c.
+  main.cpp
+cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+C:\Users\daros\Downloads\Textures Tutorial CW2 template VS2017\Textures Tutorial\main.cpp(67,28): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\daros\Downloads\Textures Tutorial CW2 template VS2017\Textures Tutorial\main.cpp(153,24): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\daros\Downloads\Textures Tutorial CW2 template VS2017\Textures Tutorial\main.cpp(163,33): warning C4244: 'argument': conversion from 'double' to 'GLint', possible loss of data
+C:\Users\daros\Downloads\Textures Tutorial CW2 template VS2017\Textures Tutorial\main.cpp(163,27): warning C4244: 'argument': conversion from 'double' to 'GLint', possible loss of data
+  3DExample1.vcxproj -> C:\Users\daros\Downloads\Textures Tutorial CW2 template VS2017\Textures Tutorial\Debug\3DExample1.exe
