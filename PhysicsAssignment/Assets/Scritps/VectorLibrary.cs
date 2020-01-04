@@ -12,10 +12,6 @@ public class VectorLibrary : MonoBehaviour
         VectorMagnitude(VectorA);
     }
 
-    private void Update()
-    {
-        
-    }
     public Vector3 AddTwoVectors (Vector3 V1, Vector3 V2)
     {
         Vector3 AdditionResult = new Vector3();
