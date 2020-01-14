@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scritps\ArenaScript.cs" />
     <Compile Include="Assets\Scritps\BallPhysics.cs" />
+    <Compile Include="Assets\Scritps\CheckLibrary.cs" />
     <Compile Include="Assets\Scritps\CubeScript.cs" />
     <Compile Include="Assets\Scritps\MovingBallBehaviour.cs" />
     <Compile Include="Assets\Scritps\VectorLibrary.cs" />

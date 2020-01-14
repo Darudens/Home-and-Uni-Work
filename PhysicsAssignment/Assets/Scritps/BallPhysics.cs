@@ -15,7 +15,6 @@ public class BallPhysics : MonoBehaviour
     void Start()
     {
         BallPositon = transform.position;
-        CubePos = cubeScript.CubePosition;
     }
 
     // Update is called once per frame
@@ -37,7 +36,7 @@ public class BallPhysics : MonoBehaviour
         {
             Velocity.y = 0;
         }
-        Debug.Log((Velocity.y < 0 ? "UP" : "DOWN") + " vy=" + (int)(100 * Velocity.y) / 100f + " py=" + (int)(100 * BallPositon.y) / 100f);
+        //Debug.Log((Velocity.y < 0 ? "UP" : "DOWN") + " vy=" + (int)(100 * Velocity.y) / 100f + " py=" + (int)(100 * BallPositon.y) / 100f);
     }
 
     void UpdateGravity()
