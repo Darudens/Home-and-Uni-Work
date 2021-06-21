@@ -1,0 +1,12 @@
+﻿  Harpy.cpp
+  Hero.cpp
+  Minotaur.cpp
+  Source.cpp
+F:\HomeAndUniWork\Home-and-Uni-Work\Assignment1Stratey\Assignment1Stratey\olcPixelGameEngine.h(2182,46): warning C4244: 'argument': conversion from 'WPARAM' to 'const unsigned short', possible loss of data
+  Spell.cpp
+  SpellBook.cpp
+  troglodyte.cpp
+  Units.cpp
+  Generating Code...
+F:\HomeAndUniWork\Home-and-Uni-Work\Assignment1Stratey\Assignment1Stratey\olcPixelGameEngine.h(2183,45): warning C4244: 'argument': conversion from 'WPARAM' to 'const unsigned short', possible loss of data
+  Assignment1Stratey.vcxproj -> F:\HomeAndUniWork\Home-and-Uni-Work\Assignment1Stratey\x64\Debug\Assignment1Stratey.exe
